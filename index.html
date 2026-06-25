@@ -30,7 +30,7 @@
             width: 90%;
             position: relative;
             z-index: 10;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
         }
         h1 {
             color: #ff4a85;
@@ -54,14 +54,10 @@
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(255, 74, 133, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-open:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 74, 133, 0.4);
-        }
-        .btn-open:active {
-            transform: scale(0.98);
+            transition: transform 0.1s ease, box-shadow 0.2s;
+            position: relative;
+            display: inline-block;
+            z-index: 999;
         }
         /* Hidden Message Section */
         .hidden-content {
@@ -97,7 +93,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
-        /* Confetti Elements */
         .confetti {
             position: absolute;
             width: 12px;
@@ -115,10 +110,10 @@
     <div class="card-container" id="card">
         <!-- Initial View -->
         <div id="envelope">
-            <div class="cake-emoji">🎁</div>
-            <h1>Hey Dersîma!</h1>
-            <p class="sub-text">You have a special delivery waiting for you inside. Click below to unpack it!</p>
-            <button class="btn-open" onclick="revealBirthday()">Open Here ✨</button>
+            <div class="cake-emoji" id="gift-emoji">🎁</div>
+            <h1 id="greeting-title">Hey Dersîma!</h1>
+            <p class="sub-text" id="instruction-text">You have a special delivery waiting for you inside. Click below to unpack it!</p>
+            <button class="btn-open" id="runaway-btn" onmouseover="moveButton()" onclick="handleButtonClick()">Open Here ✨</button>
         </div>
 
         <!-- Hidden Birthday Message View -->
@@ -128,15 +123,59 @@
             <div class="birthday-message">
                 Wishing you an amazing day filled with laughter, happiness, and everything you love! May this year ahead bring you closer to all your biggest goals and brightest dreams. 
                 <br>
-                <span class="inside-joke">🥛 P.S. I'll make sure nobody accidentally drinks your strawberry milk today!</span>
+                <span class="inside-joke">🥛 P.S. can you see me ?!</span>
             </div>
             <p style="color: #888; font-size: 0.9rem;">Hope you have the best day ever! 🎉</p>
         </div>
     </div>
 
     <script>
+        let attemptCount = 0;
+        const maxAttempts = 5;
+        const btn = document.getElementById('runaway-btn');
+
+        function moveButton() {
+            // Stop moving once the 5th attempt is reached
+            if (attemptCount >= maxAttempts) return;
+
+            attemptCount++;
+
+            if (attemptCount < maxAttempts) {
+                // Generate random positions away from the center container
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth - 40) + 20;
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight - 40) + 20;
+                
+                btn.style.position = 'fixed';
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+                
+                // Change button text dynamically to tease her
+                if (attemptCount === 1) btn.innerText = "Wait, catch me! 🏃‍♀️";
+                if (attemptCount === 2) btn.innerText = "Too slow! 😜";
+                if (attemptCount === 3) btn.innerText = "Over here! 👀";
+                if (attemptCount === 4) btn.innerText = "Almost had it! 🤏";
+            } else {
+                // On the 5th attempt, return it cleanly to its normal resting spot and wait
+                btn.style.position = 'relative';
+                btn.style.left = '0';
+                btn.style.top = '0';
+                btn.innerText = "Click Me 🥺";
+                document.getElementById('instruction-text').innerText = "Okay okay, I'll stand still now! Go ahead.";
+            }
+        }
+
+        function handleButtonClick() {
+            // If they somehow manage to click it early via touch screen, force the count forward
+            if (attemptCount < maxAttempts) {
+                moveButton();
+                return;
+            }
+            
+            // If it is the 5th step, let the card open
+            revealBirthday();
+        }
+
         function revealBirthday() {
-            // Hide the wrapper and show the message
             document.getElementById('envelope').style.display = 'none';
             const secret = document.getElementById('secretMessage');
             secret.style.display = 'block';
@@ -144,7 +183,6 @@
                 secret.style.opacity = '1';
             }, 50);
 
-            // Trigger the celebration confetti
             createConfetti();
         }
 
@@ -157,13 +195,11 @@
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.transform = `scale(${Math.random() * 1 + 0.5}) rotate(${Math.random() * 360}deg)`;
                 
-                // Random fall paths
                 const duration = Math.random() * 3 + 2;
                 confetti.style.animation = `fall ${duration}s linear forwards`;
                 
                 document.body.appendChild(confetti);
 
-                // CSS Dynamic Fall Keyframes
                 const style = document.createElement('style');
                 style.innerHTML = `
                     @keyframes fall {
@@ -173,7 +209,6 @@
                 `;
                 document.head.appendChild(style);
 
-                // Clean up elements afterwards
                 setTimeout(() => {
                     confetti.remove();
                 }, duration * 1000);
