@@ -1,143 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resume Projects | Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dersîma! 🎉</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #e6f0ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+        h1 {
+            color: #ff4a85;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .sub-text {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .btn-open {
+            background: linear-gradient(45deg, #ff4a85, #ff758c);
+            color: white;
+            border: none;
+            padding: 16px 36px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 74, 133, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-open:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 74, 133, 0.4);
+        }
+        .btn-open:active {
+            transform: scale(0.98);
+        }
+        /* Hidden Message Section */
+        .hidden-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .birthday-message {
+            color: #333;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 20px 0;
+            background: #fff5f8;
+            padding: 20px;
+            border-radius: 16px;
+            border-left: 5px solid #ff4a85;
+            text-align: left;
+        }
+        .inside-joke {
+            font-size: 0.95rem;
+            color: #ff758c;
+            font-style: italic;
+            margin-top: 15px;
+            text-align: center;
+            display: block;
+        }
+        .cake-emoji {
+            font-size: 4rem;
+            animation: bounce 2s infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        /* Confetti Elements */
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #ff0;
+            opacity: 0;
+            top: -10px;
+            z-index: 1;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#home" class="brand">Resume Projects</a>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="site-nav">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#resume">Resume</a>
-        <a href="#contact">Contact</a>
-      </nav>
+
+    <div class="card-container" id="card">
+        <!-- Initial View -->
+        <div id="envelope">
+            <div class="cake-emoji">🎁</div>
+            <h1>Hey Dersîma!</h1>
+            <p class="sub-text">You have a special delivery waiting for you inside. Click below to unpack it!</p>
+            <button class="btn-open" onclick="revealBirthday()">Open Here ✨</button>
+        </div>
+
+        <!-- Hidden Birthday Message View -->
+        <div id="secretMessage" class="hidden-content">
+            <div class="cake-emoji">🎂🎈</div>
+            <h1>Happy Birthday, Dersîma!</h1>
+            <div class="birthday-message">
+                Wishing you an amazing day filled with laughter, happiness, and everything you love! May this year ahead bring you closer to all your biggest goals and brightest dreams. 
+                <br>
+                <span class="inside-joke">🥛 P.S. I'll make sure nobody accidentally drinks your strawberry milk today!</span>
+            </div>
+            <p style="color: #888; font-size: 0.9rem;">Hope you have the best day ever! 🎉</p>
+        </div>
     </div>
-  </header>
 
-  <main>
-    <section id="home" class="hero">
-      <div class="container hero-content">
-        <p class="eyebrow">Portfolio Website</p>
-        <h1>Projects that showcase skills, impact, and growth.</h1>
-        <p>Explore professional work, technical achievements, and resume-ready projects built with clean design and practical results.</p>
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-      </div>
-    </section>
+    <script>
+        function revealBirthday() {
+            // Hide the wrapper and show the message
+            document.getElementById('envelope').style.display = 'none';
+            const secret = document.getElementById('secretMessage');
+            secret.style.display = 'block';
+            setTimeout(() => {
+                secret.style.opacity = '1';
+            }, 50);
 
-    <section id="about" class="section section-light">
-      <div class="container">
-        <div class="split-grid">
-          <div>
-            <h2>About this portfolio</h2>
-            <p>This site is built to highlight resume projects with clear descriptions, technology stacks, and the results they delivered. Use it to introduce your work to hiring managers, recruiters, and collaborators.</p>
-            <p>Each project card includes a short summary, the goals involved, and links to live demos or code repositories.</p>
-          </div>
-          <div class="stats-card">
-            <div>
-              <strong>5+</strong>
-              <span>Projects</span>
-            </div>
-            <div>
-              <strong>3</strong>
-              <span>Key Technologies</span>
-            </div>
-            <div>
-              <strong>Resume-ready</strong>
-              <span>Project format</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+            // Trigger the celebration confetti
+            createConfetti();
+        }
 
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section-header">
-          <p class="eyebrow">Featured work</p>
-          <h2>Resume Projects</h2>
-          <p>Projects designed to demonstrate problem solving, product thinking, and technical execution.</p>
-        </div>
+        function createConfetti() {
+            const colors = ['#ff4a85', '#ff758c', '#ffd166', '#06d6a0', '#118ab2', '#7209b7'];
+            for (let i = 0; i < 70; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `scale(${Math.random() * 1 + 0.5}) rotate(${Math.random() * 360}deg)`;
+                
+                // Random fall paths
+                const duration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${duration}s linear forwards`;
+                
+                document.body.appendChild(confetti);
 
-        <div class="project-grid">
-          <article class="project-card">
-            <div class="project-meta">Web App • React • Node</div>
-            <h3>TaskFlow Dashboard</h3>
-            <p>Designed a responsive productivity dashboard with task automation, analytics, and calendar integrations to help users manage daily workflows.</p>
-            <div class="project-footer">
-              <span>Highlights: data visualizations, user auth, API orchestration</span>
-              <div class="link-group">
-                <a href="#" target="_blank">Live</a>
-                <a href="#" target="_blank">Code</a>
-              </div>
-            </div>
-          </article>
+                // CSS Dynamic Fall Keyframes
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes fall {
+                        0% { top: -10px; opacity: 1; transform: translateX(0) rotate(0deg); }
+                        100% { top: 100vh; opacity: 0; transform: translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 720}deg); }
+                    }
+                `;
+                document.head.appendChild(style);
 
-          <article class="project-card">
-            <div class="project-meta">Mobile UI • Figma • Prototyping</div>
-            <h3>Course Connect</h3>
-            <p>Created a polished mobile learning platform interface with onboarding flows, progress tracking, and collaboration tools for student teams.</p>
-            <div class="project-footer">
-              <span>Highlights: UI design, user testing, interaction prototypes</span>
-              <div class="link-group">
-                <a href="#" target="_blank">Preview</a>
-                <a href="#" target="_blank">Case Study</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-meta">Data Project • Python • Automation</div>
-            <h3>Sales Pulse</h3>
-            <p>Built an automated reporting pipeline to extract, clean, and visualize sales metrics from multiple sources for executive insights.</p>
-            <div class="project-footer">
-              <span>Highlights: ETL automation, dashboards, KPI monitoring</span>
-              <div class="link-group">
-                <a href="#" target="_blank">Demo</a>
-                <a href="#" target="_blank">Repo</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="resume" class="section section-light">
-      <div class="container resume-card">
-        <h2>Resume Summary</h2>
-        <p>Use this section to summarize your professional profile, technical strengths, and the unique value you bring to future roles.</p>
-        <ul>
-          <li>Experience with frontend and backend web development</li>
-          <li>Strong collaboration in cross-functional teams</li>
-          <li>Proven ability to turn product requirements into polished deliverables</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="container contact-card">
-        <h2>Let's connect</h2>
-        <p>Ready to share your next opportunity or update the project list? Add your contact details and call-to-action here.</p>
-        <a href="mailto:you@example.com" class="btn btn-secondary">Email me</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>Built for resume projects and portfolio storytelling.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+                // Clean up elements afterwards
+                setTimeout(() => {
+                    confetti.remove();
+                }, duration * 1000);
+            }
+        }
+    </script>
 </body>
 </html>
